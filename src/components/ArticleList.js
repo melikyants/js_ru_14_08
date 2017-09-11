@@ -14,7 +14,7 @@ class ArticleList extends Component {
     }
 
     render() {
-        console.log('---', 'rendering article list')
+        
         const {openItemId, toggleOpenItem, articles} = this.props
         const articleElements = articles.map(article => (
             <li key={article.id}>
@@ -35,7 +35,7 @@ class ArticleList extends Component {
 }
 
 export default connect(state => {
-    console.log('---', 'connect')
+    
     return {
         articles: filtratedArticlesSelector(state)
     }

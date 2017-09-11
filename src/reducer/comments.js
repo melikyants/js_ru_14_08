@@ -1,4 +1,4 @@
-import {  ADD_COMMENT, UPDATING_COMMENT } from '../constants'
+import {  ADD_COMMENT } from '../constants'
 import {normalizedComments} from '../fixtures'
 
 const defaultComments = normalizedComments.reduce((acc, comment) => ({
@@ -7,8 +7,9 @@ const defaultComments = normalizedComments.reduce((acc, comment) => ({
 }), {})
 
 export default (state = defaultComments, action) => {
-    console.log('actionss: ', action);
+    
     const { type, payload, randomId } = action
+    console.log('action: ', action);
 
     switch (type) {
         case ADD_COMMENT:

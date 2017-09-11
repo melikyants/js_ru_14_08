@@ -29,7 +29,7 @@ class CommentForm extends Component {
 
     handleSubmit = ev => {
         ev.preventDefault()
-        console.log('this.state: ', this.state);
+        
         this.props.addComment(this.state)
         
         this.setState({

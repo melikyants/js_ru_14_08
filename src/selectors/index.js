@@ -7,7 +7,7 @@ export const commentsSelector = state => state.comments
 
 export const filtratedArticlesSelector = createSelector(articlesSelector, filtersSelector, (articles, filters) => {
    
-    console.log('---', 'recomputing filtrated articles')
+    
     const {selected, dateRange: {from, to}} = filters
     const articleArray = Object.values(articles)
     return articleArray.filter(article => {
@@ -18,5 +18,6 @@ export const filtratedArticlesSelector = createSelector(articlesSelector, filter
 })
 
 export const createCommentSelector = () => createSelector(commentsSelector, idSelector, (comments, id) => {
+    
     return comments[id]
 })

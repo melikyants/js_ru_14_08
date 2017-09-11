@@ -1,8 +1,8 @@
 export default store => next => action => {
-if (!action.generatedId) return next(action)
+if (!action.generateId) return next(action)
 
 next({
   ...action,
-  randomID: (new Date.now() + Math.random()).toString()
+  randomId: (Date.now() + Math.random()).toString()
   })
 }

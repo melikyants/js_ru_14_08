@@ -12,15 +12,15 @@ class CommentList extends Component {
     }
 
     componentDidMount() {
-        console.log('---', 'mounted')
+        
     }
 
     componentWillUnmount() {
-        console.log('---', 'unmounting')
+        
     }
 
     componentDidUpdate() {
-        console.log('---', 'updated')
+        
     }
 
     render() {
@@ -35,7 +35,7 @@ class CommentList extends Component {
     }
 
     getBody() {
-        const { comments, isOpen } = this.props
+        const { isOpen, article: {id, comments=[]} } = this.props
         if (!isOpen) return null
 
         const body = comments.length ? (
@@ -47,7 +47,7 @@ class CommentList extends Component {
         return (
             <div>
                 {body}
-                <CommentForm />
+                <CommentForm articleId={id}/>
             </div>
         )
     }
