@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {filtratedArticlesSelector} from '../selectors'
 import {loadAllArticles} from '../AC'
+import {NavLink, withRouter} from 'react-router-dom'
 
 class ArticleList extends Component {
     static propTypes = {
@@ -16,22 +17,22 @@ class ArticleList extends Component {
     }
 
     componentDidMount() {
-        this.props.loadAllArticles()
+        const {loaded, loading, loadAllArticles} = this.props
+        if (!loading && !loaded) loadAllArticles()
     }
 
     render() {
         console.log('---', 'rendering article list')
-        const {openItemId, toggleOpenItem, articles, loading} = this.props
+        const {openItemId, toggleOpenItem, articles, loading, path} = this.props
 
         if (loading) return <Loader/>
 
         const articleElements = articles.map(article => (
-            <li key={article.id}>
-                <Article
-                    article={article}
-                    isOpen={article.id === openItemId}
-                    toggleOpen={toggleOpenItem(article.id)}
-                />
+            <li key={article.id} onClick = {this.handleClick(article.id)}>
+                {article.title}
+{/*
+                <NavLink to={`${path}/${article.id}`} activeStyle = {{color: 'red'}}>{article.title}</NavLink>
+*/}
             </li>
         ))
 
@@ -41,12 +42,17 @@ class ArticleList extends Component {
             </ul>
         )
     }
+
+    handleClick = (id) => () => {
+        console.log('---', this.props.history.push(`/articles/${id}`))
+    }
 }
 
-export default connect(state => {
+export default withRouter(connect(state => {
     console.log('---', 'connect')
     return {
         articles: filtratedArticlesSelector(state),
-        loading: state.articles.loading
+        loading: state.articles.loading,
+        loaded: state.articles.loaded,
     }
-}, {loadAllArticles})(accordion(ArticleList))
+}, {loadAllArticles})(accordion(ArticleList)))

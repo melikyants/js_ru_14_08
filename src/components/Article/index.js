@@ -1,6 +1,7 @@
 import React, {Component, PureComponent} from 'react'
 import CommentList from '../CommentList'
 import Loader from '../Loader'
+import LocalizedText from '../LocalizedText'
 import PropTypes from 'prop-types'
 import {findDOMNode} from 'react-dom'
 import CSSTransion from 'react-addons-css-transition-group'
@@ -8,19 +9,21 @@ import './style.css'
 import {connect} from 'react-redux'
 import {deleteArticle, loadArticleById} from '../../AC'
 
-class Article extends PureComponent {
+class Article extends Component {
     static propTypes = {
+        id: PropTypes.string.isRequired,
         article: PropTypes.shape({
             id: PropTypes.string,
             title: PropTypes.string.isRequired,
             text: PropTypes.string
-        }).isRequired,
+        }),
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.isOpen && !this.props.isOpen) nextProps.loadArticle()
+    componentDidMount() {
+        const {isOpen, loadArticle} = this.props
+        if (isOpen) loadArticle()
     }
 
 /*
@@ -31,11 +34,15 @@ class Article extends PureComponent {
 
     render() {
         const {article, toggleOpen, deleteArticle} = this.props
+        console.log('---', 3)
+        if (!article) return null
 
         return (
             <div ref={this.setContainerRef}>
                 <h3 onClick = {toggleOpen}>{article.title}</h3>
-                <button onClick={deleteArticle}>delete me</button>
+                <button onClick={deleteArticle}>
+                    <LocalizedText>delete me</LocalizedText>
+                </button>
                 <CSSTransion
                     transitionName="article"
                     transitionEnterTimeout={500}
@@ -101,9 +108,11 @@ class Article extends PureComponent {
 */
 }
 
-export default connect(null, (dispatch, ownProps) => ({
-    deleteArticle: () => dispatch(deleteArticle(ownProps.article.id)),
-    loadArticle: () => dispatch(loadArticleById(ownProps.article.id))
-}))(Article)
+export default connect((state, props) => ({
+    article: state.articles.entities.get(props.id)
+}), (dispatch, ownProps) => ({
+    deleteArticle: () => dispatch(deleteArticle(ownProps.id)),
+    loadArticle: () => dispatch(loadArticleById(ownProps.id))
+}), null, {pure: false})(Article)
 
 //export default connect(null, { deleteArticle })(Article)
