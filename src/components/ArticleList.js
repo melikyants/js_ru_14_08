@@ -22,6 +22,7 @@ class ArticleList extends Component {
     render() {
         console.log('---', 'rendering article list')
         const {openItemId, toggleOpenItem, articles, loading} = this.props
+        console.log('this.articles: ', articles);
 
         if (loading) return <Loader/>
 

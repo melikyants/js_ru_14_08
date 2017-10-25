@@ -1,6 +1,6 @@
 import {
     INCREMENT, DELETE_ARTICLE, CHANGE_DATE_RANGE, CHANGE_SELECTION, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE,
-    START, SUCCESS, FAIL
+    START, SUCCESS, FAIL, LOAD_ARTICLE_COMMENT
 } from '../constants'
 
 export function increment() {
@@ -45,14 +45,6 @@ export function loadAllArticles() {
     }
 }
 
-/*
-export function loadArticleById(id) {
-    return {
-        type: LOAD_ARTICLE,
-        callAPI: `/api/article/${id}`
-    }
-}*/
-
 export function loadArticleById(id) {
     return (dispatch) => {
         dispatch({
@@ -75,4 +67,12 @@ export function loadArticleById(id) {
                 }))
         }, 1000)
     }
+}
+
+export function loadArticleComments(articleId) {
+  return {
+      type: LOAD_ARTICLE_COMMENT,
+      payload: { articleId },
+      callAPI: `/api/comment?article=${articleId}`
+  }
 }
