@@ -50,7 +50,9 @@ export default (state = defaultState, action) => {
             return state.setIn(['entities', payload.articleId, 'commentsLoading'], true)
 
         case LOAD_ARTICLE_COMMENT + SUCCESS:
-            return state.setIn(['entities', payload.articleId, 'commentsLoaded'], true)
+            return state
+                    .setIn(['entities', payload.articleId, 'commentsLoading'], false)
+                    .setIn(['entities', payload.articleId, 'commentsLoaded'], true)
         
     }
 

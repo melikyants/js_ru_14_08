@@ -5,8 +5,7 @@ import CommentForm from './CommentForm'
 import PropTypes from 'prop-types'
 import { loadArticleComments} from '../AC'
 import {connect} from 'react-redux'
-import {createCommentSelector} from '../selectors'
-import {Loader} from './Loader'
+import Loader from './Loader'
 
 class CommentList extends Component {
     static defaultProps = {

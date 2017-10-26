@@ -18,12 +18,12 @@ Comment.propTypes = {
     }).isRequired
 }
 
-// const createMapStateToProps = () => {
-//     const commentSelector = createCommentSelector()
+const createMapStateToProps = () => {
+    const commentSelector = createCommentSelector()
 
-//     return (state, ownProps) => ({
-//         comment: commentSelector(state, ownProps)
-//     })
-// }
+    return (state, ownProps) => ({
+        comment: commentSelector(state, ownProps)
+    })
+}
 
-export default Comment
+export default connect(createMapStateToProps)(Comment) 
